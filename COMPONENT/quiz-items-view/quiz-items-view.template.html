@@ -1,0 +1,15 @@
+<div class={{$ctrl.w3css.parentDiv}}>
+		<ul class={{$ctrl.w3css.ul}}> 
+			<li class={{$ctrl.w3css.listHeader}}><div>
+			
+			
+			
+			
+			<a href="#!list-of-quizes-page" class="w3-button"><h1>Bible Books</h1></a>
+			
+			
+			<br /><h2 class={{$ctrl.w3css.currentListItem}}>{{$ctrl.quizListItems[$ctrl.counter -1]}}</h2></div></li>
+			<li ng-click="$ctrl.handlelistItemClick()" class={{$ctrl.w3css.li}} ng-repeat="quizListItem in $ctrl.shuffledQuizListItems">{{quizListItem}}</li>
+		</ul>
+<div>
+

@@ -1,0 +1,35 @@
+<!-- list title - blank until user starts to type-->
+<title>Save this one</title>
+<header class={{$ctrl.w3css.header}}>
+		<h1>{{$ctrl.listTitle}}<h1>
+</header>
+
+<!-- list title input - slides in from left - disappears after user presses done-->
+<div class={{$ctrl.w3css.listTitleInputView}}>
+		<input class={{$ctrl.w3css.input}} style="width:100%" type="text" name="listTitle" ng-model="$ctrl.listTitle" placeholder="list title"required>
+		<br />
+<!-- "done" button - will not be visable if input box is empty-->
+		<button ng-show="$ctrl.listTitle.length" style="width:100%" class={{$ctrl.w3css.doneButton}} ng-click="$ctrl.doneButtonClicked()">done</button>		
+</div>
+
+
+<!-- list title visible -->
+
+<!-- list items input - slides in from left after "list title input" disappears-->
+<div class={{$ctrl.viewListItemsInput}}>
+
+	<ul class={{$ctrl.w3css.ul}} style="width:100%">
+		  <li ng-repeat="listItem in $ctrl.listItems track by $index" class={{$ctrl.w3css.li}}>{{listItem}}</li>
+	</ul>	
+
+		<input class={{$ctrl.w3css.input}} style="width:100%" type="text" name="listItem" ng-model="$ctrl.listItem" placeholder="add item {{$ctrl.listItems.length + 1}}" required>
+		<br />
+<!-- "done" button - will not be visible if input box is empty-->
+		<button ng-show="$ctrl.listItem.length" style="width:100%" class={{$ctrl.w3css.enterItemsButton}} ng-click="$ctrl.handleItemsEntered()">done</button>
+
+</div>
+
+<footer class={{$ctrl.w3css.footer}}>
+			<button ng-show="!$ctrl.listItem.length && $ctrl.listItems.length >= 2" class={{$ctrl.w3css.saveButton}} style="width:100%" ng-click="$ctrl.handleSave()">save list</button>
+</footer>
+
