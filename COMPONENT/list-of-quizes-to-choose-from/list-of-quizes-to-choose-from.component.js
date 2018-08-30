@@ -1,17 +1,15 @@
 angular.module("listOfQuizesToChooseFrom", []).
 component('listOfQuizesToChooseFrom', {
-    templateUrl: 'COMPONENT/list-of-quizes-to-choose-from/list-of-quizes-to-choose-from.template.html',
-    controller: function($scope) {
-      
-  	  $scope.listTitles = [4,2,1]
-     const listTitlesRef = funsifyDatabase.collection("games").doc("game1");
-    
-      listTitlesRef.get().then(function(doc) { 
-      	if (doc.exists) { 
+		templateUrl: 'COMPONENT/list-of-quizes-to-choose-from/list-of-quizes-to-choose-from.template.html',
+		controller: function($scope) {
+			$scope.listTitles = [];
+			const listTitlesRef = funsifyDatabase.collection("games").doc("game1");
+			listTitlesRef.get().then(function(doc) { 
+			if (doc.exists) { 
       	
       	
       	
-      	  alert(doc.data().list[2])
+      	  
       	   $scope.$apply(function () {
             $scope.listTitles = doc.data().list;
       });

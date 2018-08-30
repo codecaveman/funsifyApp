@@ -9,7 +9,10 @@
 			
 			
 			<br /><h2 class={{$ctrl.w3css.currentListItem}}>{{$ctrl.quizListItems[$ctrl.counter -1]}}</h2></div></li>
-			<li ng-click="$ctrl.handlelistItemClick()" class={{$ctrl.w3css.li}} ng-repeat="quizListItem in $ctrl.shuffledQuizListItems">{{quizListItem}}</li>
+			<li ng-click="$ctrl.handlelistItemClick()" class={{$ctrl.w3css.li}} ng-repeat="quizListItem in $ctrl.copyQuizListItems">{{quizListItem}}</li>
 		</ul>
 <div>
 
+<footer class={{$ctrl.w3css.footer}}>
+			<button class={{$ctrl.w3css.playButton}} style="width:100%" ng-click="$ctrl.handlePlay()">Shuffle</button>
+</footer>
