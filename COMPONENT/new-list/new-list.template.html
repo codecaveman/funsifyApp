@@ -18,8 +18,8 @@
 <!-- list items input - slides in from left after "list title input" disappears-->
 <div class={{$ctrl.viewListItemsInput}}>
 
-	<ul class={{$ctrl.w3css.ul}} style="width:100%">
-		  <li ng-repeat="listItem in $ctrl.listItems track by $index" class={{$ctrl.w3css.li}}>{{listItem}}</li>
+	<ul style="width:100%">
+		  <li ng-repeat="listItem in $ctrl.listItems track by $index">{{listItem}}</li>
 	</ul>	
 
 		<input class={{$ctrl.w3css.input}} style="width:100%" type="text" name="listItem" ng-model="$ctrl.listItem" placeholder="add item {{$ctrl.listItems.length + 1}}" required>

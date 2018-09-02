@@ -2,78 +2,147 @@ angular.module("quizItemsView", []).
 component('quizItemsView', {
 	templateUrl: 'COMPONENT/quiz-items-view/quiz-items-view.template.html',
 	controller: function($scope) {
-		// list selected
-		const listSelected = "Bible Books";
-		// reference to list that user has selected 
-		const listRef = funsifyDatabase.collection("lists").doc(listSelected);
+	// FIRESTONE REFS
+	const gamesRef = funsifyDatabase.collection("games");
+	
+	// ORIGINAL LIST FROM DATABASE
+		const quizUserSelected = "Bible Books";
+	// GAME OBJECT WILL BE POPULATED BY SETUPGAME FUNCTION AND SAVED TO FIRESTOR
+		let game = {};
+		game.quizTitle = quizUserSelected;
+		game.quizListItems = [];
+		game.id = "";
 		
-		this.quizListItemsDisplayed = this.copyQuizListItems
-		// get list selected from database as an array
-		$scope.quizListItemsFromFirestore = [3,0];
+		// RUN THIS FUNCTION WHEN A LIST ITEM IS PRESSED
+	  setUpGame(quizUserSelected);
 		
-		// copy list array
-		this.copyQuizListItems = angular.copy($scope.quizListItemsFromFirestore)
+		
+		$scope.listItemsToDisplay = [];
+		
+		
+		
 
-		// code that gets the list
-		listRef.get().then(function(doc) {
-			if (doc.exists) {
-			
-			 $scope.$apply(function () {
-            $scope.quizListItemsFromFirestore = doc.data().listItems;
-            alert($scope.quizListItemsFromFirestore[9])
-      });
-			
-			
-			
-			
-			
-			} else {
-			// doc.data() will be undefined in this case
-	//		alert("This list does not exist. Please choose another");
-			}
-		}).catch(function(error) {
-	    alert("Error getting document:", error);
-		}); // end listRef.get().then
 		
 		
+function setUpGame(title) {
+	getDoc(title, "lists")
+	.then(function(doc) {
+		if (doc.exists) {
+			 game.quizListItems = doc.data().listItems;
+			 saveGameDetails();
+		} else {
+				alert("This list does not exist. Please choose another");
+		} // end if else
+	}) // end then ()
+	.catch(function(error) {
+		    alert("Error getting document:", error);
+	}); // catch()
+}
+
+
+
+
+
+
+function getDoc (docName, collectionName) {
+  const doc =	accessDatabaseCollection(collectionName).doc(docName).get()
+  return doc;
+}
+
+function addDoc (data, collectionName) {
+	const addDocFunction = accessDatabaseCollection(collectionName).add(data);
+	return addDocFunction;
+}
+
+function accessDatabaseCollection (collectionName) {
+	const collection = funsifyDatabase.collection(collectionName);
+	return collection;
+}
+
+function saveGameDetails () {
+		addDoc (game, "games")
+		.then(function(gameDoc) {
+			alert(`Document written with ID: ${gameDoc.id}`); 
+			game.Id = gameDoc.id;
+			$scope.$apply(function () {
+				$scope.listItemsToDisplay = game.quizListItems;
+			}) // end $scope.$apply
+	})
+	.catch(function(error) {
+		alert(`Error adding document: ${error}`); 
+	});
+}
+
+
+/*
+// PLAY BUTTON
+this.playButton = function () {
+	funsifyDatabase.collection("lists")
+	.doc(quizUserSelected)
+	.get()
+	.then(function(doc) {
+		if (doc.exists) {
+			$scope.$apply(function () {
+				$scope.listItemsToDisplay = doc.data().listItems;
+			}) // end $scope.$apply
+		} else {
+				alert("This list does not exist. Please choose another");
+		} // end if else
+	}) // end then ()
+	.catch(function(error) {
+		    alert("Error getting document:", error);
+	}); // catch()
+}		
 		
-		// handle event when user taps on shuffled list array item
-		this.handleListClick = function() {
-			alert("change list")
-		}
-		this.handlePlay = function () {
-			alert("Play Button Clicked")
-			
-		// shuffle copy of list array
-		this.quizListItems = this.copyQuizListItems.sort(function() { return 0.5 - Math.random() });
-		// counter for next correct item in list array
-		this.counter = 0
-		}
-		this.handlelistItemClick = function () {
-				// reference to clicked item
-				const clickedItem = event.target;
-				//inner text of clicked item
-				const clickedItemInnerText = clickedItem.innerText;
-				if (clickedItemInnerText == this.quizListItems[this.counter]) {
-						clickedItem.style.display = "none";
-						this.counter++;
-					//	document.querySelectorAll("li").style.backgroundColor = "yellow";
-				} else {
-				alert("Wrong")
-						clickedItem.style.backgroundColor = "red";
-				} // end if else statement
-			} // end this.handleClick
-		// style component template using w3css framework
+		
+
+
+
+funsifyDatabase.collection("UniqueCollection").doc("uniqueDocument").set({
+
+invitees: "No invites",
+
+
+}) .then(function() {
+
+alert("Document successfully written!"); }) .catch(function(error) {
+
+alert("Error writing document: ", error); });
+
+
+// UNIVERSAL LISTENER
+		funsifyDatabase.collection("UniqueCollection")
+		.doc("uniqueDocument")
+		.onSnapshot(function(doc) { 
+			$scope.$apply(function () {
+				$scope.invites = doc.data()
+			})
+		});
+
+
+// INVITE BUTTON
+	this.invite = function () {
+		alert("Player Invited")
+		funsifyDatabase.collection("UniqueCollection")
+		.doc("uniqueDocument")
+		.update({
+		invitees: "You have been invited",
+		})
+		.then(function() {
+			alert("Document successfully updated!");
+			});
+	}
+	
+	*/
+
+// style component template using w3css framework
 		this.w3css = {
-			parentDiv: "w3-center w3-xlarge",
+			parentDiv: "",
 			listHeader: "w3-top w3-black",
 			currentListItem: "w3-animate-fading",
-			div:"",
-			ul: "w3-ul", 
-			li: "w3-panel w3-border-grey",
 			playButton: "w3-btn w3-xlarge w3-center w3-green",
+			inviteButton: "w3-btn w3-xlarge w3-center w3-blue",
 			footer:"w3-bottom"
 		} // end w3css
 	} // end controller
 }); // end component 
-

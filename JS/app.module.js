@@ -28,3 +28,25 @@ app.controller('funsifyController', function($scope) {
 	$scope.lastName = "Doe";
 });
 
+app.service('FunDB', function() { 
+	this.setUpGame = function (title) { 
+			getDoc(title, "lists")
+	.then(function(doc) {
+		if (doc.exists) {
+			 game.quizListItems = doc.data().listItems;
+			 saveGameDetails();
+		} else {
+				alert("This list does not exist. Please choose another");
+		} // end if else
+	}) // end then ()
+	.catch(function(error) {
+		    alert("Error getting document:", error);
+	}); // catch()
+	} 
+});
+
+
+
+
+
+

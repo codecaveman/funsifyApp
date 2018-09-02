@@ -38,11 +38,9 @@ component('newList', {
 			}
 			this.w3css = {
 					header: "w3-top w3-black w3-center",
-					listTitleInputView: "w3-animate-top w3-center w3-margin",
+					listTitleInputView: "w3-animate-top w3-margin",
 					input: "w3-xlarge w3-margin",
 					doneButton:"w3-btn w3-large w3-round-large w3-blue",
-					ul: "w3-ul w3-center",
-					li: "w3-hide",
 					enterItemsButton: "w3-btn w3-large w3-round-large w3-blue",
 					saveButton: "w3-btn w3-xlarge w3-center w3-green",
 					footer:"w3-bottom"
