@@ -1,16 +1,26 @@
 angular.module("listOfQuizesToChooseFrom", []).
 component('listOfQuizesToChooseFrom', {
 		templateUrl: 'COMPONENT/list-of-quizes-to-choose-from/list-of-quizes-to-choose-from.template.html',
-    controller: function($scope) {
+    controller: function($scope, game) {
 			$scope.listTitles = []
 			const listTitlesRef = funsifyDatabase.collection("lists");
 			listTitlesRef.get().then(function(querySnapshot) { 
 				querySnapshot.forEach(function(doc) {
+				
 					$scope.$apply(function () {
+					
 					$scope.listTitles.push(doc.id) 
 					});
 				}); 
 			});
+			this.handleListClicked = function () {
+				 game.settings.quizTitle = event.target.innerText;
+				 const quizTitle = event.target.innerText;
+				 game.updateQuizList(quizTitle, "lists")
+			}
+			this.handleConfirm = function () {
+				alert("confirm")
+			}
 			this.w3css = {
 				header:"w3-top w3-black",
 				button: "w3-btn w3-xxlarge w3-center w3-blue",

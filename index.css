@@ -1,8 +1,8 @@
 body { 
-    padding-top: 150px; 
     background-color: #171c28;
     color: white;
 }
+
 
 html, body, div, h1, h2, ul, li {
 
@@ -13,7 +13,7 @@ width: 100%;
 }
 
 ul {
-
+margin-top: 100px;
 	list-style-type: none; 
 
 }

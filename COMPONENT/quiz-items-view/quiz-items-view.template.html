@@ -1,8 +1,8 @@
-
+<title>home again</title>
 		<ul> 
 			<li class={{$ctrl.w3css.listHeader}}><div>
 				<a href="#!list-of-quizes-page" class="w3-button">
-					<h1>Bible Books</h1>
+					<h1>{{quizTitle}}</h1>
 				</a>
 			<br />
 					<h2 class={{$ctrl.w3css.currentListItem}}>
@@ -12,12 +12,13 @@
 
 		
 		
-		<li ng-click="$ctrl.handlelistItemClick()" ng-repeat="listItem in listItemsToDisplay track by $index">
-			{{listItem}}
+		<li ng-click="$ctrl.handlelistItemClick()" ng-repeat="quizItem in quizItems track by $index">
+			{{quizItem}}
 		</li>
 		</ul>
 
 
+<h2>{{update}}</h2>
 <footer class={{$ctrl.w3css.footer}}>
 			<button class={{$ctrl.w3css.playButton}} style="width:50%" ng-click="$ctrl.playButton()">Play</button>
 			<button class={{$ctrl.w3css.inviteButton}} style="width:50%" ng-click="$ctrl.invite()">Invite</button>
