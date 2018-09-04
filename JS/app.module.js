@@ -32,11 +32,14 @@ app.controller('funsifyController', function($scope) {
 app.service('game', function($location, $timeout) { 
 		
 		const self = this;
-		
+		//NEW OBJECT
 		this.settings = {
 			quizTitle : "Elements",
 			quizItems : ["Earth","Wind","Fire"],
+			j : [],
+			quizListIsShuffled : false,
 		} // end this.settings
+		// NEW METHOD
 		this.updateQuizList = function(docName, collectionName) {
 	  const self = this;
 		this.$location = $location;
@@ -47,12 +50,22 @@ app.service('game', function($location, $timeout) {
 					if (doc.exists) {
 					self.$location.path("/");
 						self.settings.quizItems = doc.data().listItems;
-						
 					} else {
 						alert("This list does not exist. Please choose another");
 					} // end if else
 				}) // end then
 		}; // end this.updateQuizList
+		// NEW METHOD
+		this.shuffleQuizList = function (quizList) {
+			const copiedQuizListItems = angular.copy(self.settings.quizItems)
+			
+			self.settings.shuffledQuizItems = copiedQuizListItems.sort(function() { 
+				return 0.5 - Math.random() 
+				}); // end sort
+				
+				self.settings.quizListIsShuffled = true;
+				
+		} // end this.shuffleQuizList
 });
 
 

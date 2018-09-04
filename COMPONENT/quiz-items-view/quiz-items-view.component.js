@@ -7,6 +7,15 @@ component('quizItemsView', {
 		$scope.quizTitle = game.settings.quizTitle;
 		$scope.quizItems = game.settings.quizItems;
 		
+		this.handlelistItemClick = function () {
+
+		}
+		this.playButton = function () {
+			
+			
+			game.shuffleQuizList()
+		$scope.quizItems = game.settings.shuffledQuizItems;
+		}
 		
 		
 		
