@@ -29,20 +29,25 @@ app.controller('funsifyController', function($scope) {
 });
 
 
-app.service('game', function() { 
+app.service('game', function($location, $timeout) { 
+		
 		const self = this;
+		
 		this.settings = {
 			quizTitle : "Elements",
 			quizItems : ["Earth","Wind","Fire"],
 		} // end this.settings
 		this.updateQuizList = function(docName, collectionName) {
+	  const self = this;
+		this.$location = $location;
 			funsifyDatabase.collection("lists")
 				.doc(self.settings.quizTitle)
 				.get()
 				.then(function(doc) {
 					if (doc.exists) {
+					self.$location.path("/");
 						self.settings.quizItems = doc.data().listItems;
-						alert(self.settings.quizItems[1])
+						
 					} else {
 						alert("This list does not exist. Please choose another");
 					} // end if else

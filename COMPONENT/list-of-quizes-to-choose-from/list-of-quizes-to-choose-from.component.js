@@ -18,9 +18,7 @@ component('listOfQuizesToChooseFrom', {
 				 const quizTitle = event.target.innerText;
 				 game.updateQuizList(quizTitle, "lists")
 			}
-			this.handleConfirm = function () {
-				alert("confirm")
-			}
+		
 			this.w3css = {
 				header:"w3-top w3-black",
 				button: "w3-btn w3-xxlarge w3-center w3-blue",
