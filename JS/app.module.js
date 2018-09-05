@@ -30,14 +30,19 @@ app.controller('funsifyController', function($scope) {
 
 
 app.service('game', function($location, $timeout) { 
-		
+		// SELF = THIS 
 		const self = this;
 		//NEW OBJECT
 		this.settings = {
 			quizTitle : "Elements",
 			quizItems : ["Earth","Wind","Fire"],
-			j : [],
-			quizListIsShuffled : false,
+			counter : 0,
+			getNextCorreectAnswer : function () {
+				const nextCorrectAnswer = self.settings.quizItems[self.settings.counter]
+				return nextCorrectAnswer 
+			}
+			
+			
 		} // end this.settings
 		// NEW METHOD
 		this.updateQuizList = function(docName, collectionName) {
@@ -58,14 +63,24 @@ app.service('game', function($location, $timeout) {
 		// NEW METHOD
 		this.shuffleQuizList = function (quizList) {
 			const copiedQuizListItems = angular.copy(self.settings.quizItems)
-			
 			self.settings.shuffledQuizItems = copiedQuizListItems.sort(function() { 
 				return 0.5 - Math.random() 
 				}); // end sort
-				
 				self.settings.quizListIsShuffled = true;
-				
 		} // end this.shuffleQuizList
+		// NEW METHOD
+		this.checkAnswer = function () {
+			const clickedItem = event.target; // try with const
+			let selectedAnswer = clickedItem.innerText;
+			let correctAnswer = self.settings.getNextCorreectAnswer()
+			if (selectedAnswer === correctAnswer) {
+				clickedItem.style.display = "none";
+				self.settings.counter++
+			} else {
+				alert("Wrong")
+			} // end if else
+			
+		} // end this.checkAnswer
 });
 
 

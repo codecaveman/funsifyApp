@@ -17,6 +17,7 @@ component('listOfQuizesToChooseFrom', {
 				 game.settings.quizTitle = event.target.innerText;
 				 const quizTitle = event.target.innerText;
 				 game.updateQuizList(quizTitle, "lists")
+				 game.settings.counter = 0;
 			}
 		
 			this.w3css = {

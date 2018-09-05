@@ -11,22 +11,47 @@ margin: 0;
 padding: 0;
 width: 100%;
 
+
 }
 
+h1 {
+
+font-size: 4em;
+border-bottom: 1px solid #999;
+}
+
+
+h1, ul {
+text-align: center;
+}
 ul {
-margin-top: 100px;
+	margin-top: 25px;
 	list-style-type: none; 
 
 }
 
 
+
 li {
 
 	margin-bottom: 10px;
-	text-align: center;
+	
 	font-size: 3em;
 
 }
+
+a {
+
+text-decoration: none;
+
+}
+a:link { background-color: yellow; }
+
+a:visited { background-color: cyan; }
+
+a:hover { background-color: lightgreen; }
+
+a:active { background-color: hotpink; }
 
 p {
 

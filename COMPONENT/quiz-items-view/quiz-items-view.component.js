@@ -8,28 +8,26 @@ component('quizItemsView', {
 		$scope.quizItems = game.settings.quizItems;
 		
 		this.handlelistItemClick = function () {
-
+			game.checkAnswer()
+			
 		}
 		this.playButton = function () {
-			
-			
 			game.shuffleQuizList()
-		$scope.quizItems = game.settings.shuffledQuizItems;
+			$scope.quizItems = game.settings.shuffledQuizItems;
+			game.settings.counter = 0;
 		}
 		
 		
 		this.unshuffleButton = function () {
-			
-			
-			
-		$scope.quizItems = game.settings.quizItems;
+			$scope.quizItems = game.settings.quizItems;
+			game.settings.counter = 0;
 		}
 		
 		
 // style component template using w3css framework
 		this.w3css = {
 			parentDiv: "",
-			listHeader: "w3-top w3-black",
+			listHeader: "w3-top",
 			currentListItem: "w3-animate-fading",
 			playButton: "w3-btn w3-xlarge w3-center w3-green",
 			unshuffleButton : "w3-btn w3-xlarge w3-center w3-blue",
