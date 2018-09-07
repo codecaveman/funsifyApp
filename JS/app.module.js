@@ -34,16 +34,19 @@ app.service('game', function($location, $timeout) {
 		const self = this;
 		//NEW OBJECT
 		this.settings = {
+			user : "Harold Grey",
+			quizId : "",
 			quizTitle : "Elements",
 			quizItems : ["Earth","Wind","Fire"],
+			quizInvitees : ["Tom","Bob","Sue",],
+			shuffledQuizItems : [],
+			quizListIsShuffled : false,
 			counter : 0,
-			getNextCorreectAnswer : function () {
+		} // end this.settings
+		this.getNextCorrectAnswer = function () {
 				const nextCorrectAnswer = self.settings.quizItems[self.settings.counter]
 				return nextCorrectAnswer 
-			}
-			
-			
-		} // end this.settings
+		}
 		// NEW METHOD
 		this.updateQuizList = function(docName, collectionName) {
 	  const self = this;
@@ -72,16 +75,67 @@ app.service('game', function($location, $timeout) {
 		this.checkAnswer = function () {
 			const clickedItem = event.target; // try with const
 			let selectedAnswer = clickedItem.innerText;
-			let correctAnswer = self.settings.getNextCorreectAnswer()
+			let correctAnswer = self.getNextCorrectAnswer()
 			if (selectedAnswer === correctAnswer) {
 				clickedItem.style.display = "none";
 				self.settings.counter++
 			} else {
-				alert("Wrong")
+				alert("wrong")
 			} // end if else
-			
 		} // end this.checkAnswer
-});
+		// NEW METHOD
+		this.sendInvite = function () {
+			const sharedGame = self.settings;
+			funsifyDatabase.collection("games")
+			.add(sharedGame)
+			.then(function(docRef) {
+				alert(`Document written with ID: ${docRef.id}`)
+				self.settings.quizId = docRef.id
+				self.updateQuizId()  // in firestore
+				self.updateGameIds() // in firestore
+			}) // end then
+			.catch(function(error) {
+				alert(`Error adding document: ${error}`); 
+			}); // end catch	
+		} // end this.sendInvite
+		// NEW METHOD
+		this.updateQuizId = function () {
+			funsifyDatabase.collection("games").doc(self.settings.quizId)
+			.update({quizId: self.settings.quizId }) 
+			.then(function() {
+				alert("Document successfully updated!"); 
+			}) // end then
+			.catch(function(error) {
+			// The document probably doesn't exist.
+					alert(`Error updating document: ${error}`) 
+			}) // end catch
+		} // end this.updateQuizId
+			// NEW METHOD
+		this.updateGameIds = function () {
+			funsifyDatabase.collection("unique")
+			.doc("gameIds")
+			.update({gameId: self.settings.quizId, host: self.settings.user }) 
+			.then(function() {
+				alert("Document successfully updated!"); 
+			}) // end then
+			.catch(function(error) {
+			// The document probably doesn't exist.
+					alert(`Error updating document: ${error}`) 
+			}) // end catch
+		} // end this.updateQuizId
+		// NEW METHOD
+		this.listenForInvites = function () {
+			funsifyDatabase.collection("unique")
+			.doc("gameIds")
+			.onSnapshot(function(doc) { 
+				alert("Listening for invites")
+				alert(`${ doc.data().host} has inivted you to play game ${doc.data().gameId}`); 
+			}); // end onSnapshot
+		} // end this.listenForInvites
+}); // end service		
+		
+		
+
 
 
 

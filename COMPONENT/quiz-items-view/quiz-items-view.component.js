@@ -3,7 +3,6 @@ component('quizItemsView', {
 	templateUrl: 'COMPONENT/quiz-items-view/quiz-items-view.template.html',
 	controller: function($scope, game) {
 	
-		
 		$scope.quizTitle = game.settings.quizTitle;
 		$scope.quizItems = game.settings.quizItems;
 		
@@ -16,11 +15,16 @@ component('quizItemsView', {
 			$scope.quizItems = game.settings.shuffledQuizItems;
 			game.settings.counter = 0;
 		}
-		
-		
 		this.unshuffleButton = function () {
 			$scope.quizItems = game.settings.quizItems;
 			game.settings.counter = 0;
+		}
+		this.inviteButton = function () {
+			game.sendInvite()
+		}
+		
+		this.loginButton = function () {
+			game.listenForInvites()
 		}
 		
 		

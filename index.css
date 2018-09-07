@@ -23,6 +23,7 @@ border-bottom: 1px solid #999;
 
 h1, ul {
 text-align: center;
+
 }
 ul {
 	margin-top: 25px;
@@ -30,6 +31,10 @@ ul {
 
 }
 
+input {
+
+margin-top: 400px;
+}
 
 
 li {

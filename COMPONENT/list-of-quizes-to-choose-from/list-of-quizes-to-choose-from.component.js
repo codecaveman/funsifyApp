@@ -21,7 +21,7 @@ component('listOfQuizesToChooseFrom', {
 			}
 		
 			this.w3css = {
-				header:"w3-top w3-black",
+				header:"",
 				button: "w3-btn w3-xxlarge w3-center w3-blue",
 				footer:"w3-bottom w3-black",
 			} // end this.w3css

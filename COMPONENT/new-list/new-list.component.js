@@ -37,7 +37,7 @@ component('newList', {
 				}); // end newListRef.set
 			}
 			this.w3css = {
-					header: "w3-top w3-black w3-center",
+					header: "",
 					listTitleInputView: "w3-animate-top w3-margin",
 					input: "w3-xlarge w3-margin",
 					doneButton:"w3-btn w3-large w3-round-large w3-blue",
