@@ -5,9 +5,15 @@ component('quizItemsView', {
 	
 		$scope.quizTitle = game.settings.quizTitle;
 		$scope.quizItems = game.settings.quizItems;
-		
+		  
 		this.handlelistItemClick = function () {
-			game.checkAnswer()
+			
+			let answerCorrect = game.checkAnswer()
+			alert(answerCorrect)
+			game.updateDBforCorrectAnswer() // doesnt belong here
+			if(game.settings.quizItems.length > 4) {
+			$scope.quizItems = game.settings.quizItems;
+			}
 			
 		}
 		this.playButton = function () {
@@ -26,6 +32,30 @@ component('quizItemsView', {
 		this.loginButton = function () {
 			game.listenForInvites()
 		}
+		
+		this.acceptButton = function () {
+		//	game.acceptInvite()
+		// NEW METHOD
+		
+			funsifyDatabase.collection("games")
+			.doc(game.settings.invitations[0].gameId)
+			.onSnapshot(function(doc) { 
+				alert(`Part of game ${game.settings.invitations[0].gameId}`)
+				alert(doc.data().quizItems)
+					game.settings.quizItems	= doc.data().quizItems; 
+					$scope.$apply(function () {
+							$scope.quizItems = doc.data().quizItems; 
+					})
+				
+			}); // end onSnapshot
+		
+		}
+		
+		this.startButton = function name() {
+			$scope.quizItems = game.settings.quizItems;
+		}
+		
+		
 		
 		
 // style component template using w3css framework

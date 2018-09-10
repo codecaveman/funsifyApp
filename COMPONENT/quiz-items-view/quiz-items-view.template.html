@@ -8,6 +8,9 @@
 	<h2 class={{$ctrl.w3css.currentListItem}}>
 		{{$ctrl.quizListItems[$ctrl.counter -1]}}
 	</h2>
+	<button id="loginButton" ng-click="$ctrl.loginButton()">
+		login
+	</button>
 </header>
 <ul> 
 	<li ng-click="$ctrl.handlelistItemClick()" 
@@ -30,12 +33,13 @@
 			unshuffle
 		</button>
 			<button class={{$ctrl.w3css.inviteButton}} style="width:50%" ng-click="$ctrl.inviteButton()">Invite</button>
+			<button ng-click="$ctrl.acceptButton()">Accept</button>
 			
-			
+			<button ng-click="$ctrl.startButton()">Start</button>
 			<p>{{gameId}}</p>
 			
 			
-<button class={{$ctrl.w3css.inviteButton}} style="width:50%" ng-click="$ctrl.loginButton()">login</button>
+
 			
 			
 </footer> 	

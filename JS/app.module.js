@@ -29,9 +29,15 @@ app.controller('funsifyController', function($scope) {
 });
 
 
-app.service('game', function($location, $timeout) { 
+app.service('game', function($location, $timeout ) { 
+
+	
 		// SELF = THIS 
 		const self = this;
+		this.user = {
+			name : "David Smith",
+		
+		}
 		//NEW OBJECT
 		this.settings = {
 			user : "Harold Grey",
@@ -39,9 +45,11 @@ app.service('game', function($location, $timeout) {
 			quizTitle : "Elements",
 			quizItems : ["Earth","Wind","Fire"],
 			quizInvitees : ["Tom","Bob","Sue",],
-			shuffledQuizItems : [],
+			shuffledQuizItems : [1,3,2],
 			quizListIsShuffled : false,
 			counter : 0,
+			invitations : [],
+			acceptedInvite : "",
 		} // end this.settings
 		this.getNextCorrectAnswer = function () {
 				const nextCorrectAnswer = self.settings.quizItems[self.settings.counter]
@@ -49,18 +57,21 @@ app.service('game', function($location, $timeout) {
 		}
 		// NEW METHOD
 		this.updateQuizList = function(docName, collectionName) {
-	  const self = this;
-		this.$location = $location;
+			
+	  	const self = this;
 			funsifyDatabase.collection("lists")
 				.doc(self.settings.quizTitle)
 				.get()
 				.then(function(doc) {
+			
 					if (doc.exists) {
-					self.$location.path("/");
+				
 						self.settings.quizItems = doc.data().listItems;
+							 $location.path("/");
 					} else {
 						alert("This list does not exist. Please choose another");
 					} // end if else
+					
 				}) // end then
 		}; // end this.updateQuizList
 		// NEW METHOD
@@ -73,15 +84,18 @@ app.service('game', function($location, $timeout) {
 		} // end this.shuffleQuizList
 		// NEW METHOD
 		this.checkAnswer = function () {
+			let answerCorrect = false
 			const clickedItem = event.target; // try with const
 			let selectedAnswer = clickedItem.innerText;
 			let correctAnswer = self.getNextCorrectAnswer()
 			if (selectedAnswer === correctAnswer) {
 				clickedItem.style.display = "none";
 				self.settings.counter++
+				answerCorrect = true
 			} else {
 				alert("wrong")
 			} // end if else
+			return answerCorrect;
 		} // end this.checkAnswer
 		// NEW METHOD
 		this.sendInvite = function () {
@@ -130,8 +144,35 @@ app.service('game', function($location, $timeout) {
 			.onSnapshot(function(doc) { 
 				alert("Listening for invites")
 				alert(`${ doc.data().host} has inivted you to play game ${doc.data().gameId}`); 
+				self.settings.invitations.push(doc.data())
+				alert(self.settings.invitations.length)
 			}); // end onSnapshot
 		} // end this.listenForInvites
+		/*
+		//NEW METHOD
+		this.acceptInvite = function () {
+			funsifyDatabase.collection("games")
+			.doc(self.settings.invitations[0].gameId)
+			.onSnapshot(function(doc) { 
+				alert(`Part of game ${self.settings.invitations[0].gameId}`)
+				alert(doc.data().quizItems)
+					self.settings.quizItems	= doc.data().quizItems; 
+					$scope.quizItems = [];
+			}); // end onSnapshot
+		} // end this.acceptInvite
+		*/
+		// NEW METHOD
+		this.updateDBforCorrectAnswer = function () {
+			funsifyDatabase.collection("games")
+			.doc(self.settings.invitations[0].gameId)
+			.update({capital: true }) 
+			.then(function() {
+				alert("Phew!"); 
+			}) // end then
+			.catch(function(error) {
+					alert(`Error updating document: ${error}`); 
+			}); // end catch
+		} // end this.updateDBforCorrectAnswer
 }); // end service		
 		
 		

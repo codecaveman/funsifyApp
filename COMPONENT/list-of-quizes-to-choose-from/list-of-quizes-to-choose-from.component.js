@@ -6,11 +6,9 @@ component('listOfQuizesToChooseFrom', {
 			const listTitlesRef = funsifyDatabase.collection("lists");
 			listTitlesRef.get().then(function(querySnapshot) { 
 				querySnapshot.forEach(function(doc) {
-				
 					$scope.$apply(function () {
-					
-					$scope.listTitles.push(doc.id) 
-					});
+						$scope.listTitles.push(doc.id) 
+					}); //end $scope.$apply
 				}); 
 			});
 			this.handleListClicked = function () {
