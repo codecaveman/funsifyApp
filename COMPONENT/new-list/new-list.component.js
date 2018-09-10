@@ -23,7 +23,7 @@ component('newList', {
     		this.w3css.li = "w3-animate-bottom"
 			} // this.handleItemsEntered
 			this.handleSave = function () {
-				const newListRef = funsifyDatabase.collection("lists").doc(this.listTitle)
+				const newListRef = firestoreDatabase.collection("lists").doc(this.listTitle)
 				newListRef.set({
 	    	author: "funsify team",
 	    	listItems: this.listItems,

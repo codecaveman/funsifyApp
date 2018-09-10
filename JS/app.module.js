@@ -59,7 +59,7 @@ app.service('game', function($location, $timeout ) {
 		this.updateQuizList = function(docName, collectionName) {
 			
 	  	const self = this;
-			funsifyDatabase.collection("lists")
+			firestoreDatabase.collection("lists")
 				.doc(self.settings.quizTitle)
 				.get()
 				.then(function(doc) {
@@ -100,7 +100,7 @@ app.service('game', function($location, $timeout ) {
 		// NEW METHOD
 		this.sendInvite = function () {
 			const sharedGame = self.settings;
-			funsifyDatabase.collection("games")
+			firestoreDatabase.collection("games")
 			.add(sharedGame)
 			.then(function(docRef) {
 				alert(`Document written with ID: ${docRef.id}`)
@@ -114,7 +114,7 @@ app.service('game', function($location, $timeout ) {
 		} // end this.sendInvite
 		// NEW METHOD
 		this.updateQuizId = function () {
-			funsifyDatabase.collection("games").doc(self.settings.quizId)
+			firestoreDatabase.collection("games").doc(self.settings.quizId)
 			.update({quizId: self.settings.quizId }) 
 			.then(function() {
 				alert("Document successfully updated!"); 
@@ -126,7 +126,7 @@ app.service('game', function($location, $timeout ) {
 		} // end this.updateQuizId
 			// NEW METHOD
 		this.updateGameIds = function () {
-			funsifyDatabase.collection("unique")
+			firestoreDatabase.collection("unique")
 			.doc("gameIds")
 			.update({gameId: self.settings.quizId, host: self.settings.user }) 
 			.then(function() {
@@ -139,7 +139,7 @@ app.service('game', function($location, $timeout ) {
 		} // end this.updateQuizId
 		// NEW METHOD
 		this.listenForInvites = function () {
-			funsifyDatabase.collection("unique")
+			firestoreDatabase.collection("unique")
 			.doc("gameIds")
 			.onSnapshot(function(doc) { 
 				alert("Listening for invites")
@@ -151,7 +151,7 @@ app.service('game', function($location, $timeout ) {
 		/*
 		//NEW METHOD
 		this.acceptInvite = function () {
-			funsifyDatabase.collection("games")
+			firestoreDatabase.collection("games")
 			.doc(self.settings.invitations[0].gameId)
 			.onSnapshot(function(doc) { 
 				alert(`Part of game ${self.settings.invitations[0].gameId}`)
@@ -163,7 +163,7 @@ app.service('game', function($location, $timeout ) {
 		*/
 		// NEW METHOD
 		this.updateDBforCorrectAnswer = function () {
-			funsifyDatabase.collection("games")
+			firestoreDatabase.collection("games")
 			.doc(self.settings.invitations[0].gameId)
 			.update({capital: true }) 
 			.then(function() {

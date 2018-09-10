@@ -9,7 +9,19 @@
   };
   firebase.initializeApp(config);
 
+
+// 
+const firebaseDatabase = firebase.database(); // change to 
+
 // Initialize Cloud Firestore through Firebase
-const funsifyDatabase = firebase.firestore();
-const settings = {/* your settings... */ timestampsInSnapshots: true};
-funsifyDatabase.settings(settings);
+const firestoreDatabase = firebase.firestore();  
+const settings = {
+										/* your settings... */ 
+										timestampsInSnapshots: true
+									};
+firestoreDatabase.settings(settings);
+
+
+// var ref = new Firebase("https://funsify-b5b13.firebaseio.com");
+
+

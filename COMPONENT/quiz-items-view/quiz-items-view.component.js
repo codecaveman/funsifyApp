@@ -1,7 +1,7 @@
 angular.module("quizItemsView", []).
 component('quizItemsView', {
 	templateUrl: 'COMPONENT/quiz-items-view/quiz-items-view.template.html',
-	controller: function($scope, game) {
+	controller: function($scope, game, $firebaseObject) {
 	
 		$scope.quizTitle = game.settings.quizTitle;
 		$scope.quizItems = game.settings.quizItems;
@@ -37,7 +37,7 @@ component('quizItemsView', {
 		//	game.acceptInvite()
 		// NEW METHOD
 		
-			funsifyDatabase.collection("games")
+			firestoreDatabase.collection("games")
 			.doc(game.settings.invitations[0].gameId)
 			.onSnapshot(function(doc) { 
 				alert(`Part of game ${game.settings.invitations[0].gameId}`)
@@ -53,7 +53,42 @@ component('quizItemsView', {
 		
 		this.startButton = function name() {
 			$scope.quizItems = game.settings.quizItems;
-		}
+		} // end 
+		
+		
+		
+	const ref = new Firebase("https://funsify-b5b13.firebaseio.com/");
+	const gamesRef = ref.child("games")
+	
+	const gameInviteObj = {};
+	
+	gameInviteObj.user = "brains"
+	gameInviteObj.timestamp = new Date().toGMTString()
+	gameInviteObj.gameId = gameInviteObj.user + '-' + gameInviteObj.timestamp;
+	gameInviteObj.gameList = ["Ball","Stick","Onion","Pillow","Lollies"];
+	const gameRef = gamesRef.child(gameInviteObj.gameId)
+	
+	function sendGameInvite(gameId, host, gameList) {
+  			gameRef.set(gameInviteObj);
+		}		
+sendGameInvite(gameInviteObj)
+	
+	
+	$scope.data = $firebaseObject(gamesRef);
+	
+	
+		
+		gameRef.on('value', function(data) { 
+			alert(data.val().gameId); 
+			alert(data.val().gameList);
+		});
+		
+		
+
+		
+//		gamesRef.update({list : ["Bob","Sue","Ann"]})
+		
+		
 		
 		
 		

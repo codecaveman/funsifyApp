@@ -3,7 +3,7 @@ component('listOfQuizesToChooseFrom', {
 		templateUrl: 'COMPONENT/list-of-quizes-to-choose-from/list-of-quizes-to-choose-from.template.html',
     controller: function($scope, game) {
 			$scope.listTitles = []
-			const listTitlesRef = funsifyDatabase.collection("lists");
+			const listTitlesRef = firestoreDatabase.collection("lists");
 			listTitlesRef.get().then(function(querySnapshot) { 
 				querySnapshot.forEach(function(doc) {
 					$scope.$apply(function () {
