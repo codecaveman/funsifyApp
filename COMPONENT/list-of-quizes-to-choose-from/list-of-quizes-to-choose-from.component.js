@@ -12,10 +12,13 @@ component('listOfQuizesToChooseFrom', {
 				}); 
 			});
 			this.handleListClicked = function () {
-				 game.settings.quizTitle = event.target.innerText;
+				currentQuizObj.id = event.target.innerText;
+				getQuiz(game.currentQuizObj.id, game.dbRef.lists)
+				 /*
 				 const quizTitle = event.target.innerText;
 				 game.updateQuizList(quizTitle, "lists")
 				 game.settings.counter = 0;
+				 */
 			}
 		
 			this.w3css = {

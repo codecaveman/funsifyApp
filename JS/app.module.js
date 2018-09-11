@@ -34,6 +34,11 @@ app.service('game', function($location, $timeout ) {
 	
 		// SELF = THIS 
 		const self = this;
+		
+		this.dbRef = {
+			lists : firestoreDatabase.collection("lists")
+		};
+		
 		this.user = {
 			name : "David Smith",
 		
@@ -45,8 +50,19 @@ app.service('game', function($location, $timeout ) {
 		currentQuizObj.title = "";
 		currentQuizObj.items = [];
 		
-		this.getQuiz = function() {
-			
+		this.getQuiz = function(docId, dbRef) {
+			const ref = dbRef
+			ref.doc(docId)
+			.get()
+			.then(function(doc) {
+				if (doc.exists) {
+					currentQuizObj.items = doc.data().listItems;
+					alert(currentQuizObj.items[1])
+					$location.path("/");
+				} else {
+					alert("This list does not exist. Please choose another");
+				} // end if else
+			}) // end then
 		}
 		
 		
