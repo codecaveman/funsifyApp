@@ -57,19 +57,12 @@ component('quizItemsView', {
 		
 		
 		
-	const ref = new Firebase("https://funsify-b5b13.firebaseio.com/");
-	const gamesRef = ref.child("games")
+		
 	
-	const gameInviteObj = {};
-	
-	gameInviteObj.user = "brains"
-	gameInviteObj.timestamp = new Date().toGMTString()
-	gameInviteObj.gameId = gameInviteObj.user + '-' + gameInviteObj.timestamp;
-	gameInviteObj.gameList = ["Ball","Stick","Onion","Pillow","Lollies"];
-	const gameRef = gamesRef.child(gameInviteObj.gameId)
+		
 	
 	function sendGameInvite(gameId, host, gameList) {
-  			gameRef.set(gameInviteObj);
+  			
 		}		
 sendGameInvite(gameInviteObj)
 	

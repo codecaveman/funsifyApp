@@ -100,18 +100,44 @@ app.service('game', function($location, $timeout ) {
 		// NEW METHOD
 		this.sendInvite = function () {
 			const sharedGame = self.settings;
+			
+			
+			// Firebase Version
+			const ref = new Firebase("https://funsify-b5b13.firebaseio.com/");
+			const gamesRef = ref.child("games")
+			const gameInviteObj = {};
+			gameInviteObj.user = "brains"
+			gameInviteObj.timestamp = new Date().toGMTString()
+			gameInviteObj.gameId = gameInviteObj.user + '-' + gameInviteObj.timestamp;
+			gameInviteObj.gameList = ["Ball","Stick","Onion","Pillow","Lollies","Bril"];
+			const gameRef = gamesRef.child(gameInviteObj.gameId)
+			gameRef.set(gameInviteObj);
+			alert(`Document written with ID: ${gameInviteObj.gameId}`)
+			
+			
+			
+			// Firebase Version
+			
+			/*
 			firestoreDatabase.collection("games")
 			.add(sharedGame)
 			.then(function(docRef) {
 				alert(`Document written with ID: ${docRef.id}`)
+				
+				
 				self.settings.quizId = docRef.id
 				self.updateQuizId()  // in firestore
 				self.updateGameIds() // in firestore
+				
+				
 			}) // end then
 			.catch(function(error) {
 				alert(`Error adding document: ${error}`); 
 			}); // end catch	
+			*/
 		} // end this.sendInvite
+		
+		
 		// NEW METHOD
 		this.updateQuizId = function () {
 			firestoreDatabase.collection("games").doc(self.settings.quizId)
