@@ -3,8 +3,8 @@ component('quizItemsView', {
 	templateUrl: 'COMPONENT/quiz-items-view/quiz-items-view.template.html',
 	controller: function($scope, game, $firebaseObject) {
 	
-		$scope.quizTitle = game.settings.quizTitle;
-		$scope.quizItems = game.settings.quizItems;
+		$scope.quizTitle = game.currentQuiz.title;
+		$scope.quizItems = game.currentQuiz.items
 		  
 		this.handlelistItemClick = function () {
 			
@@ -26,17 +26,19 @@ component('quizItemsView', {
 			game.settings.counter = 0;
 		}
 		this.inviteButton = function () {
-			game.sendInvite()
+		alert("Upload Quiz")
+			game.uploadCurrentQuiz();
 		}
 		
 		this.loginButton = function () {
 			game.listenForInvites()
 		}
 		
-		this.acceptButton = function () {
-		//	game.acceptInvite()
-		// NEW METHOD
 		
+		
+		this.acceptButton = function () {
+		alert("accepted")
+		/*
 			firestoreDatabase.collection("games")
 			.doc(game.settings.invitations[0].gameId)
 			.onSnapshot(function(doc) { 
@@ -48,7 +50,7 @@ component('quizItemsView', {
 					})
 				
 			}); // end onSnapshot
-		
+		*/
 		}
 		
 		this.startButton = function name() {
@@ -64,6 +66,8 @@ component('quizItemsView', {
 	function sendGameInvite(gameId, host, gameList) {
   			
 		}		
+/*
+
 sendGameInvite(gameInviteObj)
 	
 	
@@ -71,13 +75,10 @@ sendGameInvite(gameInviteObj)
 	
 	
 		
-		gameRef.on('value', function(data) { 
-			alert(data.val().gameId); 
-			alert(data.val().gameList);
-		});
 		
 		
-
+		
+*/
 		
 //		gamesRef.update({list : ["Bob","Sue","Ann"]})
 		
