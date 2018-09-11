@@ -38,6 +38,23 @@ app.service('game', function($location, $timeout ) {
 			name : "David Smith",
 		
 		}
+		
+		// currentQuizObj
+		this.currentQuizObj = {};
+		currentQuizObj.id = "";
+		currentQuizObj.title = "";
+		currentQuizObj.items = [];
+		
+		this.getQuiz = function() {
+			
+		}
+		
+		
+		
+		// end currentQuizObj
+		
+		
+		
 		//NEW OBJECT
 		this.settings = {
 			user : "Harold Grey",
