@@ -18,10 +18,14 @@ app.config(function($routeProvider) {
     .when("/new-list", {
         templateUrl : "VIEW/new-list.html"
     })
+    .when("/challengers-list", {
+        templateUrl : "VIEW/challengers-list.html"
+    })
     .when("/list-of-quizes-page", {
         templateUrl : "VIEW/list-of-quizes-page.html"
     });
 }); 
+
 
 
 app.controller('funsifyController', function($scope) {
