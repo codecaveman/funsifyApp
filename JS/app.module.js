@@ -4,6 +4,7 @@ const app = angular.module('funsifyApp', [
 'quizItemsView',
 'listOfQuizesToChooseFrom',
 'newList',
+'challengers',
 ])
 
 app.config(function($routeProvider) {
