@@ -1,1 +1,10 @@
-<h1>Come On!<h1>
+
+
+
+<ul>
+	<li ng-repeat="challenge in challenges track by $index" 
+			id={{challenge.key()}}
+			ng-click="$ctrl.chooseChallengeClicked()">
+				{{challenge.key()}} - {{challenge.val().opponents.length}}
+	</li>
+</ul>

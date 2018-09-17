@@ -1,29 +1,18 @@
 angular.module("listOfQuizesToChooseFrom", []).
 component('listOfQuizesToChooseFrom', {
 		templateUrl: 'COMPONENT/list-of-quizes-to-choose-from/list-of-quizes-to-choose-from.template.html',
-    controller: function($scope, game) {
-			$scope.listTitles = []
-			const listTitlesRef = firestoreDatabase.collection("lists");
-			listTitlesRef.get().then(function(querySnapshot) { 
-				querySnapshot.forEach(function(doc) {
-					$scope.$apply(function () {
-						$scope.listTitles.push(doc.id) 
-					}); //end $scope.$apply
-				}); 
+    controller: function($scope, game, funsify) {
+			$scope.listTitles = [];
+			funsify.listsRef.on("child_added", function(data) {
+				$scope.$apply(function () {
+					$scope.listTitles.push(data.key()) 
+				}); //end $scope.$apply
 			});
 			this.handleListClicked = function () {
-				game.currentQuiz.title = event.target.innerText;
-				const docId = game.currentQuiz.title
-				game.getQuiz(docId)
-			  /*
-				 const quizTitle = event.target.innerText;
-				 game.updateQuizList(quizTitle, "lists")
-				 game.settings.counter = 0;
-				 */
+				title = event.target.innerText;
+				funsify.updateCurrentGame(title)
 			}
-		
 			this.w3css = {
-				header:"",
 				button: "w3-btn w3-xxlarge w3-center w3-blue",
 				footer:"w3-bottom w3-black",
 			} // end this.w3css

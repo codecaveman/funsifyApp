@@ -1,20 +1,36 @@
 angular.module("quizItemsView", []).
 component('quizItemsView', {
 	templateUrl: 'COMPONENT/quiz-items-view/quiz-items-view.template.html',
-	controller: function($scope, game, $firebaseObject) {
+	controller: function($scope, game, funsify, $firebaseObject, $firebaseArray, $location) {
 	
-		$scope.quizTitle = game.currentQuiz.title;
-		$scope.quizItems = game.currentQuiz.items
-		  
+//	funsify.listsRef.child("Ipads").push({items:["30","10.5","7.9"]})
+	const itemsRef = funsify.gameRef.child('items');
+	const titleRef = funsify.gameRef.child('title');
+	$scope.listItems = $firebaseArray(itemsRef); 
+	$scope.listTitle = funsify.currentGame.title;
+	//$scope.listItems = funsify.currentGame.items;
+	const getListOf = function (listTitle) {
+			const listRef = funsify.listsRef.child(listTitle);
+				listRef.once("value", function(data) {
+				funsify.userSelectedList.items = data.val().listItems;
+				alert(funsify.userSelectedList.items[1])
+				$scope.$apply(function () {
+					$scope.items
+				})
+			});
+		}
+		this.challengeButton = function () {
+			funsify.issueChallenge();
+		
+		}
+	//	getListOf("Clouds")
+		this.headingClicked = function () {
+		//	alert("heading Clicked")
+			$location.path("/")
+		}
+		 
 		this.handlelistItemClick = function () {
-			
 			let answerCorrect = game.checkAnswer()
-			alert(answerCorrect)
-			game.updateDBforCorrectAnswer() // doesnt belong here
-			if(game.settings.quizItems.length > 4) {
-			$scope.quizItems = game.settings.quizItems;
-			}
-			
 		}
 		this.playButton = function () {
 			game.shuffleQuizList()
@@ -25,71 +41,14 @@ component('quizItemsView', {
 			$scope.quizItems = game.settings.quizItems;
 			game.settings.counter = 0;
 		}
-		this.inviteButton = function () {
-		alert("Upload Quiz")
-			game.uploadCurrentQuiz();
-		}
-		
 		this.loginButton = function () {
 			game.listenForInvites()
 		}
-		
-		
-		
-		this.acceptButton = function () {
-		alert("accepted")
-		/*
-			firestoreDatabase.collection("games")
-			.doc(game.settings.invitations[0].gameId)
-			.onSnapshot(function(doc) { 
-				alert(`Part of game ${game.settings.invitations[0].gameId}`)
-				alert(doc.data().quizItems)
-					game.settings.quizItems	= doc.data().quizItems; 
-					$scope.$apply(function () {
-							$scope.quizItems = doc.data().quizItems; 
-					})
-				
-			}); // end onSnapshot
-		*/
-		}
-		
 		this.startButton = function name() {
 			$scope.quizItems = game.settings.quizItems;
 		} // end 
-		
-		
-		
-		
-	
-		
-	
-	function sendGameInvite(gameId, host, gameList) {
-  			
-		}		
-/*
-
-sendGameInvite(gameInviteObj)
-	
-	
-	$scope.data = $firebaseObject(gamesRef);
-	
-	
-		
-		
-		
-		
-*/
-		
-//		gamesRef.update({list : ["Bob","Sue","Ann"]})
-		
-		
-		
-		
-		
-		
 // style component template using w3css framework
 		this.w3css = {
-			parentDiv: "",
 			listHeader: "w3-top",
 			currentListItem: "w3-animate-fading",
 			playButton: "w3-btn w3-xlarge w3-center w3-green",

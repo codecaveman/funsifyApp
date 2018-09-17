@@ -1,24 +1,22 @@
 <div>
 	<header>
-		<h1 class={{$ctrl.w3css.activeList}}>Choose a Subject</h1>
+		<h1>Choose a Subject</h1>
 	</header>
 	<div>
 		<ul>
-			<!-- list drawn from firestore database-->
-			<li ng-repeat="listTitle in listTitles">
-			
-					<button class="w3-button" ng-click="$ctrl.handleListClicked()">
-						{{listTitle}}
-					</button>
+			<!-- list drawn from firebase database-->
+			<li ng-click="$ctrl.handleListClicked()"
+					ng-repeat="listTitle in listTitles track by $index">
+						{{listTitle}}	
 			</li>
-	
 		</ul>
 	</div>
 	<footer class={{$ctrl.w3css.footer}}>
 		<a href="#!new-list">
-			<button class="{{$ctrl.w3css.button}}" style="width:100%">create new list</button>
+			<button class="{{$ctrl.w3css.button}}" style="width:100%">
+				create new list
+			</button>
 		<a/>
-</footer>
-
+	</footer>
 </div>
 

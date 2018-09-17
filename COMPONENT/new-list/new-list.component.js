@@ -1,7 +1,7 @@
 angular.module("newList", []).
 component('newList', {
 		templateUrl: 'COMPONENT/new-list/new-list.template.html',
-		controller: function($scope) {
+		controller: function($scope, funsify) {
 			this.listTitle = "";
 			let viewListInput = true;
 			this.viewListInput = viewListInput;
@@ -23,12 +23,19 @@ component('newList', {
     		this.w3css.li = "w3-animate-bottom"
 			} // this.handleItemsEntered
 			this.handleSave = function () {
-				const newListRef = firestoreDatabase.collection("lists").doc(this.listTitle)
-				newListRef.set({
-	    	author: "funsify team",
+			
+			let listDetails = { author: "funsify team",
 	    	listItems: this.listItems,
 	    	modified: new Date()
-				}) // end newListRef.set
+				}
+			
+			listRef = funsify.listsRef.child(this.listTitle)
+			listRef.set(listDetails)
+			
+			
+			
+				const newListRef = firestoreDatabase.collection("lists").doc(this.listTitle)
+				newListRef.set(listDetails) // end newListRef.set
 				.then(function(docRef) {
 	    		alert(`list saved - "${newListRef.id}"`);
 				}) // end then
@@ -36,6 +43,9 @@ component('newList', {
 	    		alert(`Error adding document: ${error}`);
 				}); // end newListRef.set
 			}
+			
+			
+			
 			this.w3css = {
 					header: "",
 					listTitleInputView: "w3-animate-top w3-margin",

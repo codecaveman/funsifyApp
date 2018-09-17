@@ -1,9 +1,7 @@
 <header>
-	<a href="#!list-of-quizes-page">
-		<h1>
-			{{quizTitle}}
-		</h1>
-	</a>
+	<h1 ng-click="$ctrl.headingClicked()">
+		{{listTitle}}
+	</h1>
 	<br />
 	<h2 class={{$ctrl.w3css.currentListItem}}>
 		{{$ctrl.quizListItems[$ctrl.counter -1]}}
@@ -11,22 +9,17 @@
 	<button id="loginButton" ng-click="$ctrl.loginButton()">
 		login
 	</button>
-		<a href="#!challengers-list">
-		<button>
+	<a href="#!challengers-list">
 			number of challenges : {{4 + 3}}
-		</button>
 	</a>
-	
-	
-	
 </header>
 <ul> 
 	<li ng-click="$ctrl.handlelistItemClick()" 
-			ng-repeat="quizItem in quizItems track by $index">
-				{{quizItem}}
+			ng-repeat="listItem in listItems track by $index">
+				{{listItem.$value}}
+				<button ng-click="listItems.$remove(listItem)">x</button>
 	</li>
 </ul>
-<h2>{{update}}</h2>
 <footer class={{$ctrl.w3css.footer}}>
 		<button 
 			class={{$ctrl.w3css.playButton}} 
@@ -40,16 +33,8 @@
 			ng-click="$ctrl.unshuffleButton()">
 			unshuffle
 		</button>
-			<button class={{$ctrl.w3css.inviteButton}} style="width:50%" ng-click="$ctrl.inviteButton()">Invite</button>
-			<button ng-click="$ctrl.acceptButton()">Accept</button>
-			
+			<button class={{$ctrl.w3css.inviteButton}} style="width:50%" ng-click="$ctrl.challengeButton()">issue challenge</button>
 			<button ng-click="$ctrl.startButton()">Start</button>
-			<p>{{gameId}}</p>
-			
-			
-
-			
-			
 </footer> 	
 		
 		
