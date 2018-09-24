@@ -1,7 +1,9 @@
 <header>
+
 	<h1 ng-click="$ctrl.headingClicked()">
 		{{listTitle}}
 	</h1>
+
 	<br />
 	<h2 class={{$ctrl.w3css.currentListItem}}>
 		{{$ctrl.quizListItems[$ctrl.counter -1]}}
@@ -17,7 +19,7 @@
 	<li ng-click="$ctrl.handlelistItemClick()" 
 			ng-repeat="listItem in listItems track by $index">
 				{{listItem.$value}}
-				<button ng-click="listItems.$remove(listItem)">x</button>
+				<button ng-click="listItems.$remove(listItem)"><span ng-click="$ctrl.handleX()">x</span></button>
 	</li>
 </ul>
 <footer class={{$ctrl.w3css.footer}}>
@@ -33,6 +35,10 @@
 			ng-click="$ctrl.unshuffleButton()">
 			unshuffle
 		</button>
+		
+		<button ng-click="$ctrl.beginButton()">begin</button>
+		
+		
 			<button class={{$ctrl.w3css.inviteButton}} style="width:50%" ng-click="$ctrl.challengeButton()">issue challenge</button>
 			<button ng-click="$ctrl.startButton()">Start</button>
 </footer> 	

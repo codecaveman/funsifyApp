@@ -2,47 +2,70 @@ angular.module("quizItemsView", []).
 component('quizItemsView', {
 	templateUrl: 'COMPONENT/quiz-items-view/quiz-items-view.template.html',
 	controller: function($scope, game, funsify, $firebaseObject, $firebaseArray, $location) {
+		alert(`Hello ${funsify.user}`)
+	$scope.listItems = [];
+	const gameRef = funsify.gamesRef.child(funsify.user);
+	/*
+	gameRef.once("value", function(data) {
+	$scope.$apply(function () {
+		$scope.listItems = data.val().items;
+	  $scope.listTitle = data.val().title;
+	})
+			
+	}) // end gameRef.once
 	
-//	funsify.listsRef.child("Ipads").push({items:["30","10.5","7.9"]})
-	const itemsRef = funsify.gameRef.child('items');
-	const titleRef = funsify.gameRef.child('title');
-	$scope.listItems = $firebaseArray(itemsRef); 
-	$scope.listTitle = funsify.currentGame.title;
-	//$scope.listItems = funsify.currentGame.items;
-	const getListOf = function (listTitle) {
-			const listRef = funsify.listsRef.child(listTitle);
-				listRef.once("value", function(data) {
-				funsify.userSelectedList.items = data.val().listItems;
-				alert(funsify.userSelectedList.items[1])
-				$scope.$apply(function () {
-					$scope.items
-				})
-			});
-		}
-		this.challengeButton = function () {
+	*/
+	let score = 0
+	this.handleX = function () {
+	
+		alert(`${score} to ${funsify.user}`)
+		score++;
+	}
+	this.headingClicked = function () {
+		alert("heading Clicked")
+	  $location.path("/")
+	}
+	
+	this.challengeButton = function () {
 			funsify.issueChallenge();
 		
 		}
-	//	getListOf("Clouds")
-		this.headingClicked = function () {
-		//	alert("heading Clicked")
-			$location.path("/")
-		}
+	
+	this.beginButton = function () {
+		
+	alert("Begin")
+	const itemsRef = funsify.gameRef.child('items'); 
+	 	  $scope.listItems = $firebaseArray(itemsRef); 
+	}
+		/*
+		
+		
+
+	
+	const titleRef = funsify.gameRef.child('title');
+	
+	
+	
+
+	
+	
+		
+	
+		
 		 
 		this.handlelistItemClick = function () {
 			let answerCorrect = game.checkAnswer()
 		}
 		this.playButton = function () {
-			game.shuffleQuizList()
-			$scope.quizItems = game.settings.shuffledQuizItems;
-			game.settings.counter = 0;
+			$scope.listItems = $firebaseArray(itemsRef);
 		}
 		this.unshuffleButton = function () {
 			$scope.quizItems = game.settings.quizItems;
 			game.settings.counter = 0;
 		}
 		this.loginButton = function () {
-			game.listenForInvites()
+		alert(120)
+		//	game.listenForInvites()
 		}
 		this.startButton = function name() {
 			$scope.quizItems = game.settings.quizItems;
@@ -56,5 +79,10 @@ component('quizItemsView', {
 			inviteButton: "w3-btn w3-xlarge w3-center w3-blue",
 			footer:"w3-bottom"
 		} // end w3css
+		
+		
+		*/
+		
+		
 	} // end controller
 }); // end component 

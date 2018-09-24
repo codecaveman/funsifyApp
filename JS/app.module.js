@@ -5,6 +5,7 @@ const app = angular.module('funsifyApp', [
 'listOfQuizesToChooseFrom',
 'newList',
 'challengers',
+'login',
 ])
 
 app.config(function($routeProvider) {
@@ -14,6 +15,9 @@ app.config(function($routeProvider) {
     })
     .when("/quiz", {
         templateUrl : "VIEW/quiz.html"
+    })
+    .when("/login", {
+        templateUrl : "VIEW/login.html"
     })
     .when("/new-list-title", {
         templateUrl : "VIEW/new-list-title.html"
@@ -66,45 +70,41 @@ app.service('game', function($location) {
 			return answerCorrect;
 		} // end this.checkAnswer
 }); // end service here
-
-
+  
 
 // NEW SERVICE
 app.service('funsify', function($location) { 
 		// SELF = THIS
 		const self = this;
 		// user
-		this.user = "Fred Smith"
+		this.listTitles = [];
+		this.listSelected = "";
+		this.user = "Stranger";
 		// NEW METHOD 
-		// currentGame Object (Default is Planets)
-		this.currentGame = {}
-		this.currentGame.title = "Planets";
-		this.currentGame.items = ["Mercury", "Venus","Earth","Mars","Jupiter","Saturn","Uranus","Neptune"]
 		// firebase database
 		this.db = new Firebase("https://funsify-b5b13.firebaseio.com")
 		this.usersRef = this.db.child("users");
 		this.listsRef = this.db.child("lists"); 
 		this.gamesRef = this.db.child("games");
-		this.challengesRef = this.db.child("challenges");
-		this.challengeRef = this.challengesRef.child(this.user);
+		this.challengersRef = this.db.child("challengers");
 		this.gameRef = this.gamesRef.child(this.user);
 		// NEW METHOD
-		this.updateCurrentGame = function(title) {
+		this.uploadGame = function(title) {
 			const listRef = self.listsRef.child(title);
-			listRef.on("value", function(data) {
-				self.currentGame.title = title;
-			 	self.currentGame.items = data.val().listItems;
-			 	self.uploadGame();
-				$location.path("/quiz");
+			listRef.once("value", function(data) {
+				let game = {};
+				game.title = title;
+				game.items = data.val().listItems;
+			 	self.gameRef.set(game)
 			}); // end listRef.on
-		} // end getQuiz
+		} // end this.uploadGame
 		// NEW METHOD
-		this.uploadGame = function() {
-			this.gameRef.set(this.currentGame)
-		}
+		
 		this.issueChallenge = function () {
-			self.challengeRef.set({opponents:["Mary","Mike","Molly"], 
-														title: this.currentGame.title
+			
+			self.challengerRef = self.challengersRef.child(self.user);
+			self.challengerRef.set({opponents:["Mary","Mike","Molly"] 
+									
 			})// end self.challengeRef
 		}		
 }); // end service here	, 

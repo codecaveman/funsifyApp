@@ -9,7 +9,6 @@
   };
   firebase.initializeApp(config);
 
-
 // 
 const firebaseDatabase = firebase.database(); // change to 
 

@@ -1,0 +1,18 @@
+<h1>Login Form<h1>
+
+<form name="myForm">
+    
+    <input name="name" ng-model="displayName" placeholder="username"required><br/>
+    <input type="email" name="email" ng-model="email" placeholder="email"required><br />
+    <input type="password" name="password" ng-model="password" placeholder="password"required><br />
+    <input type="password" name="pin" ng-model="pin" placeholder="pin number"required><br />
+</form>
+
+<br />
+
+<button ng-click="$ctrl.handleSignUp()">sign up</button>
+<button ng-click="$ctrl.handleSignIn()">sign in</button>
+<button ng-click="$ctrl.handleSignOut()">sign out</button>
+
+
+
